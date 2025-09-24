@@ -27,7 +27,7 @@ public class JwtUtil {
     public boolean isTokenValid(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(secretBytes) // <-- Corrige aquí
+                    .setSigningKey(secretBytes)
                     .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class JwtUtil {
     // EXTRA: obtener claims del token
     public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser()
-                .setSigningKey(secretBytes) // <-- Corrige aquí también
+                .setSigningKey(secretBytes)
                 .parseClaimsJws(token)
                 .getBody();
     }
