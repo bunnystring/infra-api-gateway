@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: infra-api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: infra-auth-service
+          uri: lb://infra-auth-service
+          predicates:
+            - Path=/**
+        - id: notifications-service
+          uri: lb://notifications-service
+          predicates:
+            - Path=/notifications/**
+        - id: orders-service
+          uri: lb://orders-service
+          predicates:
+            - Path=/orders/**
+        - id: groups-service
+          uri: lb://groups-service
+          predicates:
+            - Path=/groups/**
+        - id: employees-service
+          uri: lb://employees-service
+          predicates:
+            - Path=/employees/**
+        - id: infra-devices-service
+          uri: lb://infra-devices-service
+          predicates:
+            - Path=/api/devices/**
+      httpclient:
+        connect-timeout: 5000
+        response-timeout: 5s
+    config:
+      enabled: false
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret: u2UiYJGgZ1yfXBUiPqCU0CWqIHwsNV6xlOgEqo6pkcY=
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.server: DEBUG
